@@ -2,9 +2,10 @@ package com.example.flashcard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -78,6 +79,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.add_card).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.save).setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+                MainActivity.this.startActivityForResult(intent, 100);
+                findViewById(R.id.answer_1).setVisibility(View.INVISIBLE);
+                findViewById(R.id.answer_2).setVisibility(View.INVISIBLE);
+                findViewById(R.id.answer_3).setVisibility(View.INVISIBLE);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    String question = data.getExtras().getString("string1");
+                    String answer = data.getExtras().getString("string2");
+                    ((TextView)findViewById(R.id.presidentQ)).setText(question);
+                    ((TextView)findViewById(R.id.presidentA)).setText(answer);
+                }
+            }
+        }
     }
 
 }
