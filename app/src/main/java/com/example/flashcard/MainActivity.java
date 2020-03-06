@@ -83,18 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
-                MainActivity.this.startActivity(intent);
-            }
-        });
-
-        findViewById(R.id.save).setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
                 MainActivity.this.startActivityForResult(intent, 100);
-                findViewById(R.id.answer_1).setVisibility(View.INVISIBLE);
-                findViewById(R.id.answer_2).setVisibility(View.INVISIBLE);
-                findViewById(R.id.answer_3).setVisibility(View.INVISIBLE);
             }
         });
 
@@ -110,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
                     String answer = data.getExtras().getString("string2");
                     ((TextView)findViewById(R.id.presidentQ)).setText(question);
                     ((TextView)findViewById(R.id.presidentA)).setText(answer);
+                    findViewById(R.id.answer_1).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.answer_2).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.answer_3).setVisibility(View.INVISIBLE);
                 }
             }
         }
