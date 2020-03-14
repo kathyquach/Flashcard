@@ -9,4 +9,5 @@
     <color name="yellow">#FFE9A5</color>
     <color name="correct">#588F27</color>
     <color name="incorrect">#AC4137</color>
+    <color name="gray">#555555</color>
 </resources>
