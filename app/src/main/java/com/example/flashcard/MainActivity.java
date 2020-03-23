@@ -2,11 +2,9 @@ package com.example.flashcard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -30,35 +28,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.presidentQ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                (findViewById(R.id.presidentQ)).setVisibility(View.INVISIBLE);
-//                (findViewById(R.id.presidentA)).setVisibility(View.VISIBLE);
-//                (findViewById(R.id.answer_1)).setBackgroundColor(
-//                        getResources().getColor(R.color.yellow));
-//                (findViewById(R.id.answer_2)).setBackgroundColor(
-//                        getResources().getColor(R.color.yellow));
-//                (findViewById(R.id.answer_3)).setBackgroundColor(
-//                        getResources().getColor(R.color.yellow));
-
-//                View answerSideView = findViewById(R.id.presidentA);
-//                View questionSideView = findViewById(R.id.presidentQ);
-//
-//                // get the center for the clipping circle
-//                int cx = answerSideView.getWidth() / 2;
-//                int cy = answerSideView.getHeight() / 2;
-//
-//                // get the final radius for the clipping circle
-//                float finalRadius = (float) Math.hypot(cx, cy);
-//
-//                // create the animator for this view (the start radius is zero)
-//                Animator anim = ViewAnimationUtils.createCircularReveal(answerSideView, cx, cy, 0f, finalRadius);
-//
-//                // hide the question and show the answer to prepare for playing the animation!
-//                questionSideView.setVisibility(View.INVISIBLE);
-//                answerSideView.setVisibility(View.VISIBLE);
-//
-//                anim.setDuration(1000);
-//                anim.start();
-
                 findViewById(R.id.presidentQ).setCameraDistance(25000);
                 findViewById(R.id.presidentA).setCameraDistance(25000);
 
@@ -92,15 +61,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.presidentA).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                (findViewById(R.id.presidentQ)).setVisibility(View.VISIBLE);
-//                (findViewById(R.id.presidentA)).setVisibility(View.INVISIBLE);
-//                (findViewById(R.id.answer_1)).setBackgroundColor(
-//                        getResources().getColor(R.color.yellow));
-//                (findViewById(R.id.answer_2)).setBackgroundColor(
-//                        getResources().getColor(R.color.yellow));
-//                (findViewById(R.id.answer_3)).setBackgroundColor(
-//                        getResources().getColor(R.color.yellow));
-
                 findViewById(R.id.presidentQ).setCameraDistance(25000);
                 findViewById(R.id.presidentA).setCameraDistance(25000);
 
@@ -185,9 +145,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String prevQ = allFlashcards.get(currentCardDisplayedIndex).getQuestion();
-                String prevA = allFlashcards.get(currentCardDisplayedIndex).getAnswer();
-
                 // advance our pointer index so we can show the next card
                 currentCardDisplayedIndex++;
 
@@ -195,10 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentCardDisplayedIndex > allFlashcards.size() - 1) {
                     currentCardDisplayedIndex = 0;
                 }
-                if (allFlashcards.size() == 0) {
-
-                }
-                else {
+                if (allFlashcards.size() != 0) {
                     // set the question and answer TextViews with data from the database
                     ((TextView) findViewById(R.id.presidentQ)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
                     ((TextView) findViewById(R.id.presidentA)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
