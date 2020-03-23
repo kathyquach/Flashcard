@@ -2,9 +2,13 @@ package com.example.flashcard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.util.List;
@@ -26,28 +30,104 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.presidentQ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (findViewById(R.id.presidentQ)).setVisibility(View.INVISIBLE);
-                (findViewById(R.id.presidentA)).setVisibility(View.VISIBLE);
-                (findViewById(R.id.answer_1)).setBackgroundColor(
-                        getResources().getColor(R.color.yellow));
-                (findViewById(R.id.answer_2)).setBackgroundColor(
-                        getResources().getColor(R.color.yellow));
-                (findViewById(R.id.answer_3)).setBackgroundColor(
-                        getResources().getColor(R.color.yellow));
+//                (findViewById(R.id.presidentQ)).setVisibility(View.INVISIBLE);
+//                (findViewById(R.id.presidentA)).setVisibility(View.VISIBLE);
+//                (findViewById(R.id.answer_1)).setBackgroundColor(
+//                        getResources().getColor(R.color.yellow));
+//                (findViewById(R.id.answer_2)).setBackgroundColor(
+//                        getResources().getColor(R.color.yellow));
+//                (findViewById(R.id.answer_3)).setBackgroundColor(
+//                        getResources().getColor(R.color.yellow));
+
+//                View answerSideView = findViewById(R.id.presidentA);
+//                View questionSideView = findViewById(R.id.presidentQ);
+//
+//                // get the center for the clipping circle
+//                int cx = answerSideView.getWidth() / 2;
+//                int cy = answerSideView.getHeight() / 2;
+//
+//                // get the final radius for the clipping circle
+//                float finalRadius = (float) Math.hypot(cx, cy);
+//
+//                // create the animator for this view (the start radius is zero)
+//                Animator anim = ViewAnimationUtils.createCircularReveal(answerSideView, cx, cy, 0f, finalRadius);
+//
+//                // hide the question and show the answer to prepare for playing the animation!
+//                questionSideView.setVisibility(View.INVISIBLE);
+//                answerSideView.setVisibility(View.VISIBLE);
+//
+//                anim.setDuration(1000);
+//                anim.start();
+
+                findViewById(R.id.presidentQ).setCameraDistance(25000);
+                findViewById(R.id.presidentA).setCameraDistance(25000);
+
+                findViewById(R.id.presidentQ).animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .start();
+
+                findViewById(R.id.presidentQ).animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .withEndAction(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        findViewById(R.id.presidentQ).setVisibility(View.INVISIBLE);
+                                        findViewById(R.id.presidentA).setVisibility(View.VISIBLE);
+                                        // second quarter turn
+                                        findViewById(R.id.presidentA).setRotationY(-90);
+                                        findViewById(R.id.presidentA).animate()
+                                                .rotationY(0)
+                                                .setDuration(200)
+                                                .start();
+                                    }
+                                }
+                        ).start();
+
             }
         });
 
         findViewById(R.id.presidentA).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (findViewById(R.id.presidentQ)).setVisibility(View.VISIBLE);
-                (findViewById(R.id.presidentA)).setVisibility(View.INVISIBLE);
-                (findViewById(R.id.answer_1)).setBackgroundColor(
-                        getResources().getColor(R.color.yellow));
-                (findViewById(R.id.answer_2)).setBackgroundColor(
-                        getResources().getColor(R.color.yellow));
-                (findViewById(R.id.answer_3)).setBackgroundColor(
-                        getResources().getColor(R.color.yellow));
+//                (findViewById(R.id.presidentQ)).setVisibility(View.VISIBLE);
+//                (findViewById(R.id.presidentA)).setVisibility(View.INVISIBLE);
+//                (findViewById(R.id.answer_1)).setBackgroundColor(
+//                        getResources().getColor(R.color.yellow));
+//                (findViewById(R.id.answer_2)).setBackgroundColor(
+//                        getResources().getColor(R.color.yellow));
+//                (findViewById(R.id.answer_3)).setBackgroundColor(
+//                        getResources().getColor(R.color.yellow));
+
+                findViewById(R.id.presidentQ).setCameraDistance(25000);
+                findViewById(R.id.presidentA).setCameraDistance(25000);
+
+                findViewById(R.id.presidentA).animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .start();
+
+                findViewById(R.id.presidentA).animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .withEndAction(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        findViewById(R.id.presidentA).setVisibility(View.INVISIBLE);
+                                        findViewById(R.id.presidentQ).setVisibility(View.VISIBLE);
+                                        // second quarter turn
+                                        findViewById(R.id.presidentQ).setRotationY(-90);
+                                        findViewById(R.id.presidentQ).animate()
+                                                .rotationY(0)
+                                                .setDuration(200)
+                                                .start();
+                                    }
+                                }
+                        ).start();
+
             }
         });
 
@@ -92,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
                 MainActivity.this.startActivityForResult(intent, 100);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
@@ -104,6 +185,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String prevQ = allFlashcards.get(currentCardDisplayedIndex).getQuestion();
+                String prevA = allFlashcards.get(currentCardDisplayedIndex).getAnswer();
+
                 // advance our pointer index so we can show the next card
                 currentCardDisplayedIndex++;
 
@@ -122,6 +206,26 @@ public class MainActivity extends AppCompatActivity {
                     ((TextView) findViewById(R.id.presidentA)).setTextColor(getResources().getColor(R.color.black));
                     findViewById(R.id.presidentQ).setBackgroundResource(R.drawable.question_background);
                     findViewById(R.id.presidentA).setBackgroundResource(R.drawable.answer_background);
+                    final Animation leftOutAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.left_out);
+                    final Animation rightInAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.right_in);
+                    leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            // this method is called when the animation first starts
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            // this method is called when the animation is finished playing
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                            // we don't need to worry about this method
+                        }
+                    });
+                    findViewById(R.id.presidentQ).startAnimation(leftOutAnim);
+                    findViewById(R.id.presidentQ).startAnimation(rightInAnim);
                 }
             }
         });

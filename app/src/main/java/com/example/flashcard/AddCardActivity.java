@@ -31,6 +31,7 @@ public class AddCardActivity extends AppCompatActivity {
                 data.putExtra("string2", textA);
                 setResult(RESULT_OK, data);
                 finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
             }
         });
 
